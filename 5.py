@@ -18,6 +18,14 @@ def prefix(s):
 
 
 def kmp(s, t):
+    # Оптимизация (оставление только интересующей обрасти)
+    if len(t) > len(s):
+        input_index = max(0, len(t) - len(s) - 1)
+        t = t[input_index:]
+    else:
+        file_index = max(0, len(s) - len(t))
+        s = s[:len(s) - file_index]
+
     # index = -1
     f = prefix(s)
     k = 0
@@ -36,5 +44,5 @@ def kmp(s, t):
 
 for i in words:
     prefix_x = kmp(i, input_word)
-    if prefix_x and prefix_x < min(len(input_word), len(i)):
+    if prefix_x and prefix_x < len(i):
         print(input_word + i[prefix_x:])
